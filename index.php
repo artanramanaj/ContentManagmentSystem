@@ -15,7 +15,10 @@ $results_post = mysqli_query($connection, $GETPOSTS);
 include "includes/navigation.php"; 
 
 ?>
-<div class="col-lg-6">
+<div class="container">
+
+
+<div class="col-lg-6 ">
 <?php
 while ($post_col = mysqli_fetch_assoc($results_post)) {
     $post_title = $post_col['post_title'];
@@ -35,7 +38,11 @@ while ($post_col = mysqli_fetch_assoc($results_post)) {
     </p>
     <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
     <hr>
-    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+    <img class="img-responsive postImg" src="images/<?php if($post_img != null) {
+            echo  $post_img;
+    }  else {
+            echo "exist.png";
+    } ?>" alt="">
     <hr>
     <p><?php echo $post_desc; ?></p>
     <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -46,13 +53,16 @@ while ($post_col = mysqli_fetch_assoc($results_post)) {
 ?>
 </div>
            
-            <?php 
-include "includes/sidebar.php";
-?>
+<?php include "includes/sidebar.php"; ?>
         </div>
 
         <hr>
-<?php 
+        </div>
+
+ <div class="container">
+ <?php 
 include "includes/footer.php";
 ?>
+ </div>       
+
 
