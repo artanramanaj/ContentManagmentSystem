@@ -19,7 +19,7 @@
     $count = mysqli_num_rows($search_query);
 
     if($count == 0) {
-        echo "No results";
+        echo "<h1>No results</h1>";
     } else {
         ?>
         <div class="col-lg-6">
@@ -53,9 +53,11 @@
     ?>
  
         <div>
-            <?php include "includes/sidebar.php"; ?>     
+            <?php include "includes/sidebar.php"; ?>
+     
+        
     </div>
-  
+ 
 
 </div>
 
