@@ -1,3 +1,6 @@
+<?php
+ob_start();
+include "../includes/db.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
