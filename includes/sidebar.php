@@ -1,7 +1,7 @@
 <?php
 include "includes/db.php";
 
-$get_categories = "SELECT * FROM categories";
+$get_categories = "SELECT * FROM category";
 $response = mysqli_query($connection, $get_categories);
 ?>
 
