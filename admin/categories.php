@@ -1,6 +1,5 @@
-<?php
-
-include "includes/admin_header.php" ?>
+<?php include "includes/admin_header.php" ?>
+<?php include "includes/functions.php" ?>
 <div id="wrapper">
 
     <!-- Navigation -->
@@ -23,21 +22,7 @@ include "includes/admin_header.php" ?>
             <!-- /.row -->
 
             <?php
-            if (isset($_POST['submit'])) {
-                $submit = $_POST['submit'];
-                $new_category = $_POST['new_category'];
-
-                if ($new_category == "" || $new_category == null) {
-                    echo "<h1>The field is null, write a category name there</h1>";
-                } else {
-                    $add_category = "INSERT INTO categories (cat_title) VALUES ('$new_category')";
-                    $query = mysqli_query($connection, $add_category);
-
-                    // Redirect after successful form submission
-                    header("Location: categories.php");
-                    exit(); // Ensure script execution stops after redirection
-                }
-            }
+            categoryInsert();
             ?>
 
             <div class="col-lg-6">
@@ -56,13 +41,55 @@ include "includes/admin_header.php" ?>
                     </div>
                 </form>
 
+
+                <form action="" method="POST">
+
+                    <div class="form-group">
+                        <label for="edit_category">Edit Category</label>
+                        <!-- reading the data first before trying to Edit -->
+                        <?php
+
+                        if (isset($_GET['edit'])) {
+                            $cat_id = $_GET['edit'];
+
+                            $query = "SELECT * FROM categories WHERE cat_id = '{$cat_id}'";
+                            $get_category_id = mysqli_query($connection, $query);
+
+                        }
+
+                        ?>
+
+                        <?php
+
+                        while ($row = mysqli_fetch_assoc($get_category_id)) {
+
+                            $cat_title = $row['cat_title'];
+                            ?>
+
+                        <?php }
+
+                        ?>
+                        <input type="text" class="form-control" name="new_category" id="edit_category" value="<?php if (isset($cat_title)) {
+                            echo $cat_title;
+                        } ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>">
+
+                        <!-- edit the value and send data to server using post method -->
+                        <?php updateCategory(); ?>
+
+                        <input class="btn btn-info" type="submit" name="update_category" class="form-control"
+                            id="update_category" value="edit">
+                    </div>
+                </form>
+
                 <!-- Geting all categoires and showing them in category page  -->
                 <?php
 
                 $query = "SELECT * FROM categories";
                 $response = mysqli_query($connection, $query);
-
-
                 ?>
 
             </div>
@@ -77,34 +104,13 @@ include "includes/admin_header.php" ?>
 
                 header("Location: categories.php");
 
-            } 
+            }
 
             ?>
             <!-- finished deleting the category -->
 
-            <!-- Updating categories -->
-                <?php
-                
-                if (isset($_GET['edit'])) {
-                    $id = $_GET['edit'];
-                    
-                    if(isset($_POST['submit'])) {
-                        $edit_category = $_POST['new_category'];
-                        echo $edit_category;
-                        echo $id;
-                      
-                    } else {
-                        echo "category doesnt exist";
-                    }
-                    
-                  
 
-            
 
-                } 
-
-                ?>
-            <!-- finished updating categories -->
             <div class="d-flex flex-row justify-content-end col-lg-6">
 
                 <table class="table table-bordered ">
