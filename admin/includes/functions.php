@@ -12,8 +12,8 @@ function categoryInsert()
         if ($new_category == "" || $new_category == null) {
             echo "<h1>The field is null, write a category name there</h1>";
         } else {
-            $add_category = "INSERT INTO categories (cat_title) VALUES ('$new_category')";
-            $query = mysqli_query($connection, $add_category);
+            $query= "INSERT INTO categories (cat_title) VALUES ('$new_category')";
+            $add_category = mysqli_query($connection, $query);
 
             // Redirect after successful form submission
             header("Location: categories.php");

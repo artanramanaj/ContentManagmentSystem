@@ -48,29 +48,30 @@
                         <label for="edit_category">Edit Category</label>
                         <!-- reading the data first before trying to Edit -->
                         <?php
-
+                        $res = null;
                         if (isset($_GET['edit'])) {
                             $cat_id = $_GET['edit'];
-
                             $query = "SELECT * FROM categories WHERE cat_id = '{$cat_id}'";
-                            $get_category_id = mysqli_query($connection, $query);
+                            $res= mysqli_query($connection, $query);
 
-                        }
+                        } 
 
                         ?>
 
                         <?php
-
-                        while ($row = mysqli_fetch_assoc($get_category_id)) {
-
+                       if (isset($_GET['edit'])){
+                        while ($row = mysqli_fetch_assoc($res)) {
                             $cat_title = $row['cat_title'];
+                       }
                             ?>
 
-                        <?php }
+                        <?php } else {
+                            $cat_title = "select the categorie you want to edit";
+                        }
 
                         ?>
                         <input type="text" class="form-control" name="new_category" id="edit_category" value="<?php if (isset($cat_title)) {
-                            echo $cat_title;
+                            echo strtoupper($cat_title);
                         } ?>">
                     </div>
 
@@ -99,8 +100,8 @@
 
             if (isset($_GET['delete'])) {
                 $id = $_GET['delete'];
-                $delete_category = "DELETE FROM categories WHERE (cat_id) = $id";
-                $query = mysqli_query($connection, $delete_category);
+                $query = "DELETE FROM categories WHERE (cat_id) = $id";
+                $delete_category = mysqli_query($connection, $query);
 
                 header("Location: categories.php");
 
@@ -133,7 +134,7 @@
                                     <?php echo $cat_id ?>
                                 </td>
                                 <td>
-                                    <?php echo $cat_title ?>
+                                    <?php echo strtoupper($cat_title) ?>
                                 </td>
                                 <td>
                                     <a href="categories.php?delete=<?php echo $cat_id ?>"><button
