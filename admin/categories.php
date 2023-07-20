@@ -60,10 +60,12 @@
                         ?>
 
                         <?php
+                        if (isset($_GET['edit'])) {
+                            while ($row = mysqli_fetch_assoc($get_category_id)) {
 
-                        while ($row = mysqli_fetch_assoc($get_category_id)) {
+                                $cat_title = $row['cat_title'];
+                            }
 
-                            $cat_title = $row['cat_title'];
                             ?>
 
                         <?php }
