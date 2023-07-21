@@ -17,104 +17,34 @@
                         <small>Author</small>
                     </h1>
 
-                    <table class="table table-hover ">
-                        <th>
-                            <tr></tr>
-                            <!-- select all field names  -->
-                            <?php
-                            $query = "SHOW COLUMNS FROM posts";
-                            $result = mysqli_query($connection, $query);
+                    <?php
 
-                            while ($row = mysqli_fetch_array($result)) {
+                    if (isset($_GET['source'])) {
+                        $source = $_GET['source'];
+                    } else {
+                        $source = '';
+                    }
 
-                                ?>
+                    switch ($source) {
 
-                            <td>
-                                <?php echo $row['Field'] ?>
-                            </td>
-                         
+                        case 'addposts';
+                            include "addposts.php";
+                            break;
 
+                        case 'edit_posts';
+                            include "edit_post.php";
+                            break;
 
-                        <?php } ?>
-                        </tr>
-                        </th>
-                        <tbody>
-                            <?php
+                        case 'view_all_posts';
+                            include "view_all_posts.php";
+                            break;
 
-                            $query = "SELECT * FROM posts";
-                            $result = mysqli_query($connection, $query);
+                        default;
+                            include "view_all_posts.php";
+                            break;
+                    }
 
-                            while ($row = mysqli_fetch_array($result)) {
-
-                                    $id= $row['id'];
-                                  
-                                ?>
-                                <tr>
-                                    <td>
-                                        <?php echo $row['id'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_category_id'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_title'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_author'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_date'] ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($row['post_img']) {
-                                            echo "<img width='150px' src='../images/{$row['post_img']}' />";
-                                        } else {
-                                            echo strtoupper("<h3 class='text-center'>There is no image in db</h3>");
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_desc'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_tags'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['post_comment_count'] ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($row['post_status'] == 1) {
-                                            echo "the value is true" . $row['post_status'];
-                                        } else {
-                                            echo "the value is false 0";
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger text-white">
-                                           <?php echo "<a  href='posts.php?delete=$id'>delete post</a> " ?>
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php }
-                            ?>
-                            <!-- delete a post -->
-                            <?php
-
-                                if(isset($_GET['delete'])){
-                                    $get_post_id = $_GET['delete'];
-
-                                  $query = "DELETE FROM posts  WHERE id =  $get_post_id";
-                                    $delete_post = mysqli_query($connection, $query);
-
-                                    header("Location: posts.php");
-                                    exit;
-                                } 
-                            ?>
-                        </tbody>
-                    </table>
+                    ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>
