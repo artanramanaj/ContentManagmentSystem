@@ -1,22 +1,19 @@
 <table class="table table-hover ">
     <th>
-        <tr></tr>
-        <!-- select all field names  -->
-        <?php
-        $query = "SHOW COLUMNS FROM posts";
-        $result = mysqli_query($connection, $query);
-
-        while ($row = mysqli_fetch_array($result)) {
-
-            ?>
-
-        <td>
-            <?php echo $row['Field'] ?>
-        </td>
-
-
-
-    <?php } ?>
+        <tr>
+        <td>Id</td>
+        <td>Category Id</td>
+        <td>Category Name</td>
+        <td>Post Title</td>
+        <td>Post Author</td>
+        <td>Post Date</td>
+        <td>Post Image</td>
+        <td>Post Description</td>
+        <td>Post Tags</td>
+        <td>Post Comment Count</td>
+        <td>Post Status</td>
+        <td></td>
+        <td></td>
     </tr>
     </th>
     <tbody>
@@ -25,21 +22,36 @@
         $query = "SELECT * FROM posts";
         $result = mysqli_query($connection, $query);
 
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
 
             $id = $row['id'];
-
+            $post_category_id = $row['post_category_id'];
             ?>
             <tr>
                 <td>
                     <?php echo $row['id'] ?>
                 </td>
                 <td>
-                    <?php echo $row['post_category_id'] ?>
+                    <?php echo  $post_category_id ?>
                 </td>
+                <?php 
+                      $query = "SELECT * FROM categories WHERE cat_id = '$post_category_id'";
+                      $select_category_id = mysqli_query($connection, $query);
+  
+                      while($secondrow = mysqli_fetch_assoc($select_category_id)){
+                          $category_name = $secondrow['cat_title'];
+  
+                
+                ?>
                 <td>
-                    <?php echo $row['post_category_name'] ?>
+                    <?php
+                    
+              
+                        echo $category_name ;
+                    
+                    ?>
                 </td>
+                <?php } ?>
                 <td>
                     <?php echo $row['post_title'] ?>
                 </td>

@@ -10,6 +10,7 @@ if (isset($_GET['edit'])) {
 }
 
 while ($row = mysqli_fetch_assoc($res)) {
+    $post_category_id = $row['post_category_id'];
     $post_title = $row['post_title'];
     $post_author = $row['post_author'];
     $post_date = $row['post_date'];
@@ -31,7 +32,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                 value="<?php echo $post_title ?>">
         </div>
 
-        <select name="" id="">
+        <select name="post_content" id="">
 
 
             <?php
@@ -46,8 +47,19 @@ while ($row = mysqli_fetch_assoc($res)) {
                 $cat_title = $row['cat_title'];
 
 
+                
                 ?>
-                <option value="<?php echo $cat_id ?>">
+                <option value="<?php 
+            
+                $query = "SELECT * FROM categories WHERE cat_id = $post_category_id";
+                $get_cat_id = mysqli_query($connection, $query);
+                while($row = mysqli_fetch_assoc($get_cat_id)){
+                    $categorie_title = $row['cat_title'];
+           
+                echo $categorie_title;
+                
+                ?>">
+                <?php      } ?>
                     <?php echo $cat_title ?>
                 </option>
             <?php } ?>
