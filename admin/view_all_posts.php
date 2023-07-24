@@ -38,8 +38,12 @@
                     <?php echo $row['post_category_id'] ?>
                 </td>
                 <td>
+                    <?php echo $row['post_category_name'] ?>
+                </td>
+                <td>
                     <?php echo $row['post_title'] ?>
                 </td>
+
                 <td>
                     <?php echo $row['post_author'] ?>
                 </td>

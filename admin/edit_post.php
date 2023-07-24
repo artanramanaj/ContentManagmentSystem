@@ -15,6 +15,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     $post_date = $row['post_date'];
     $post_img = $row['post_img'];
     $post_desc = $row['post_desc'];
+    $post_content = $row['post_content'];
     $post_tags = $row['post_tags'];
     $post_comment_count = $row['post_comment_count'];
     $post_status = $row['post_status'];
@@ -30,6 +31,28 @@ while ($row = mysqli_fetch_assoc($res)) {
                 value="<?php echo $post_title ?>">
         </div>
 
+        <select name="" id="">
+
+
+            <?php
+
+            $query = "SELECT * FROM categories";
+            $response = mysqli_query($connection, $query);
+
+
+
+            while ($row = mysqli_fetch_assoc($response)) {
+                $cat_id = $row['cat_id'];
+                $cat_title = $row['cat_title'];
+
+
+                ?>
+                <option value="<?php echo $cat_id ?>">
+                    <?php echo $cat_title ?>
+                </option>
+            <?php } ?>
+        </select>
+
         <div class="form-group">
             <label for="post_author">Post Author</label>
             <input type="text" class="form-control" id="post_author" name="post_author" aria-describedby="emailHelp"
@@ -43,9 +66,12 @@ while ($row = mysqli_fetch_assoc($res)) {
         </div>
 
         <div class="form-group">
-            <label for="post_img">Post Img</label>
+
+            <img src="../images/<?php echo $post_img ?>" width="200" alt="">
+
             <input type="file" class="form-control" id="post_img" name="post_img" aria-describedby="emailHelp"
                 value="<?php echo $post_img ?>">
+
         </div>
 
         <div class="form-group">
@@ -69,6 +95,11 @@ while ($row = mysqli_fetch_assoc($res)) {
             <input type="text" class="form-control" id="post_status" name="post_status" aria-describedby="emailHelp"
                 value="<?php echo $post_status ?>">
         </div>
+        <div class="form-group">
+            <label for="post_content">Example textarea</label>
+            <textarea class="form-control" id="post_content" name="post_content"
+                rows="3"><?php echo $post_content ?></textarea>
+        </div>
         <input type="submit" value="submit" name="create_post" class="btn btn-primary"></input>
     </form>
 <?php } ?>
@@ -80,25 +111,21 @@ if (isset($_POST['create_post'])) {
     $post_author = $_POST['post_author'];
     $post_date = $_POST['post_date'];
     $post_desc = $_POST['post_desc'];
+    $post_content = $_POST['post_content'];
     $post_tags = $_POST['post_tags'];
     $post_comment_count = $_POST['post_comment_count'];
     $post_status = $_POST['post_status'];
 
-    // Handle the file upload
-    $target_dir = "../images"; // Replace with the directory where you want to save uploaded images
+
+    $target_dir = "../images";
     $post_img = $_FILES['post_img']['name'];
     $target_file = $target_dir . basename($post_img);
     move_uploaded_file($_FILES['post_img']['tmp_name'], $target_file);
 
-    // Your database query
-    $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status' WHERE id='$editPost'";
+
+    $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_content='$post_content' ,post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status' WHERE id='$editPost'";
 
     $res = mysqli_query($connection, $query);
 
-    if ($res) {
-        echo $editPost;
-    } else {
-        echo "data not sent";
-    }
 }
 ?>
