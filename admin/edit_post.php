@@ -108,7 +108,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                 value="<?php echo $post_status ?>">
         </div>
         <div class="form-group">
-            <label for="post_content">Example textarea</label>
+            <label for="post_content">Post Content  </label>
             <textarea class="form-control" id="post_content" name="post_content"
                 rows="3"><?php echo $post_content ?></textarea>
         </div>
@@ -139,5 +139,9 @@ if (isset($_POST['create_post'])) {
 
     $res = mysqli_query($connection, $query);
 
+    header("Location: posts.php");
+    exit;
+
 }
+
 ?>

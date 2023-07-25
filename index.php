@@ -51,7 +51,7 @@
                     alt="">
                 <hr>
                 <p>
-                    <?php echo $post_desc; ?>
+                    <?php echo mb_strimwidth($post_desc, 0, 42,'...'); ?>
                 </p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>

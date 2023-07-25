@@ -33,10 +33,11 @@ $response = mysqli_query($connection, $get_categories);
             <div class="col-lg-6">
                 <ul class="list-unstyled">
                     <?php 
-                    while ($column = mysqli_fetch_assoc($response)) {
-                        $cat_title = $column['cat_title'];
+                    while ($row = mysqli_fetch_assoc($response)) {
+                        $cat_id = $row['cat_id'];
+                        $cat_title = $row['cat_title'];
                         ?>
-                        <li><a href="#"><?php echo $cat_title; ?></a></li>
+                        <li><a href="./posts_categories.php?cat_id=<?php echo $cat_id ?>"><?php echo $cat_title; ?></a></li>
                         <?php
                     }
                     ?>
