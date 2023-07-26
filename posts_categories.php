@@ -36,9 +36,7 @@ include "includes/navigation.php";
                             <a href="#">
                                 <?php echo $post_title; ?>
                             </a>
-                            <a href="#">
-                                <?php echo $post_category_id; ?>
-                            </a>
+                         
                         </h2>
                         <p class="lead">
                             by <a href="index.php">
@@ -65,10 +63,7 @@ include "includes/navigation.php";
                    
                     
                 }
-                if (!$foundPosts) {
-                    // Display the message when no matching posts are found
-                    echo "<h1>There are no posts for this category id</h1>";
-                }
+             
             }
             ?>
 

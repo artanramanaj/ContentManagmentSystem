@@ -65,13 +65,40 @@ include "includes/navigation.php";
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a Comment:</h4>
-                <form role="form">
+                <form action="" method="POST" role="form">
+                <div class="form-group">
+                            <label for="comment_author">Enter your name</label>
+                            <input type="text" class="form-control" id="comment_author" name="comment_author"
+                                 required>
+                        </div>
+                <div class="form-group">
+                            <label for="comment_email">Enter your email</label>
+                            <input type="text" class="form-control" id="comment_email" name="comment_email"
+                                required>
+                        </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                    <label for="comment_content">Enter your comment</label>
+                        <textarea class="form-control" name="comment_content" id="comment_content" rows="4"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                 </form>
             </div>
+
+            <?php
+            
+            if(isset($_POST['create_comment'])){
+                $comment_author = $_POST['comment_author'];
+                $comment_email = $_POST['comment_email'];
+                $comment_content = $_POST['comment_content'];
+
+
+                $query = "INSERT INTO comments (comment_author, comment_email, comment_content ) VALUES ('$comment_author', ' $comment_email', '$comment_content')";
+                $create_comment = mysqli_query($connection, $query);
+              
+
+            }
+            
+            ?>
 
             <hr>
 
