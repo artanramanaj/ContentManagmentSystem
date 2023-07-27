@@ -20,6 +20,7 @@ include "includes/navigation.php";
 
 
                 while ($row = mysqli_fetch_assoc($res)) {
+                    $post_id = $row['id'];
                     $post_title = ucfirst($row['post_title']);
                     $post_author = $row['post_author'];
                     $post_date = $row['post_date'];
@@ -66,18 +67,16 @@ include "includes/navigation.php";
             <div class="well">
                 <h4>Leave a Comment:</h4>
                 <form action="" method="POST" role="form">
-                <div class="form-group">
-                            <label for="comment_author">Enter your name</label>
-                            <input type="text" class="form-control" id="comment_author" name="comment_author"
-                                 required>
-                        </div>
-                <div class="form-group">
-                            <label for="comment_email">Enter your email</label>
-                            <input type="text" class="form-control" id="comment_email" name="comment_email"
-                                required>
-                        </div>
                     <div class="form-group">
-                    <label for="comment_content">Enter your comment</label>
+                        <label for="comment_author">Enter your name</label>
+                        <input type="text" class="form-control" id="comment_author" name="comment_author" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment_email">Enter your email</label>
+                        <input type="text" class="form-control" id="comment_email" name="comment_email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment_content">Enter your comment</label>
                         <textarea class="form-control" name="comment_content" id="comment_content" rows="4"></textarea>
                     </div>
                     <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
@@ -85,86 +84,66 @@ include "includes/navigation.php";
             </div>
 
             <?php
-            
-            if(isset($_POST['create_comment'])){
+
+            if (isset($_POST['create_comment'])) {
+                $comment_post_id = $_GET['p_id'];
                 $comment_author = $_POST['comment_author'];
                 $comment_email = $_POST['comment_email'];
                 $comment_content = $_POST['comment_content'];
 
 
-                $query = "INSERT INTO comments (comment_author, comment_email, comment_content ) VALUES ('$comment_author', ' $comment_email', '$comment_content')";
+
+                $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date ) VALUES ('$comment_post_id','$comment_author', ' $comment_email', '$comment_content','unapproved', now())";
                 $create_comment = mysqli_query($connection, $query);
-              
+
+                if (!$create_comment) {
+                    echo die("Error creating while making the query") . ' ' . mysqli_error($connection);
+                }
 
             }
-            
+
             ?>
 
             <hr>
 
-            <!-- Posted Comments -->
+            <?php
 
-            <!-- Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Start Bootstrap
-                        <small>August 25, 2014 at 9:30 PM</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
-                    Cras
-                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                    vulputate
-                    fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
+            $query = "SELECT * FROM comments WHERE comment_post_id = '$p_id' AND comment_status = 'approved' ORDER BY comment_id DESC";
+            $show_comments = mysqli_query($connection, $query);
 
-            <!-- Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Start Bootstrap
-                        <small>August 25, 2014 at 9:30 PM</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
-                    Cras
-                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                    vulputate
-                    fringilla. Donec lacinia congue felis in faucibus.
-                    <!-- Nested Comment -->
-                    <div class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://placehold.it/64x64" alt="">
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nested Start Bootstrap
-                                <small>August 25, 2014 at 9:30 PM</small>
-                            </h4>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
-                            commodo.
-                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                            ac
-                            nisi
-                            vulputate fringilla. Donec lacinia congue felis in fauc ibus.
-                        </div>
+            while ($row = mysqli_fetch_assoc($show_comments)) {
+
+                $comment_author = $row['comment_author'];
+                $comment_content = $row['comment_content'];
+                $comment_date = $row['comment_date'];
+
+                ?>
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <?php $comment_author ?>
+                            <small>
+                                <?php echo $comment_date ?>
+                            </small>
+                        </h4>
+                        <?php echo $comment_content ?>
                     </div>
-                    <!-- End Nested Comment -->
                 </div>
-            </div>
-        </div><!-- End of first column -->
 
-        <!-- Second Column -->
-        <div><!-- Added a Bootstrap grid column class -->
+            <?php } ?>
+
+        </div>
+
+
+        <div>
             <?php include "includes/sidebar.php"; ?>
-        </div><!-- End of second column -->
+        </div>
 
-    </div><!-- End of row -->
-
-</div><!-- End of container -->
+    </div>
+</div>
 
 <div class="container">
     <hr>
