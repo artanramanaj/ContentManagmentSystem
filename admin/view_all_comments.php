@@ -1,5 +1,5 @@
 <table class="table table-hover ">
-    <th>
+    <thead>
         <tr>
             <td>Id</td>
             <td>Author</td>
@@ -13,7 +13,7 @@
             <td></td>
 
         </tr>
-    </th>
+    </thead>
     <tbody>
         <?php
 
@@ -25,30 +25,24 @@
         while ($row = mysqli_fetch_assoc($result)) {
             $comment_id = $row['comment_id'];
             $comment_post_id = $row['comment_post_id'];
+            
 
             $query = "SELECT * FROM posts WHERE id = $comment_post_id";
             $get_posts = mysqli_query($connection, $query);
 
-            while ($row_2 = mysqli_fetch_assoc($get_posts)) {
+            if(!$query) {
+                die("query failed"). mysqli_error($connection);
+            }
+            while($row_2 = mysqli_fetch_assoc($get_posts)) {
 
                 $comment_post_title = $row_2['post_title'];
 
                 ?>
                 <tr>
                     <td>
-                        <?php echo $row['comment_id'] ?>
+                        <?php echo $row['comment_id']; ?>
                     </td>
-                    <?php
-                    //   $query = "SELECT * FROM categories WHERE cat_id = '$post_category_id'";
-                    //   $select_category_id = mysqli_query($connection, $query);
-            
-                    //   while($secondrow = mysqli_fetch_assoc($select_category_id)){
-                    //       $category_name = $secondrow['cat_title'];
-            
-
-                    ?>
-
-
+               
                     <td>
                         <?php echo $row['comment_author'] ?>
                     </td>

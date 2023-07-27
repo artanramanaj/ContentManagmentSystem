@@ -12,6 +12,9 @@
     $search_post = "SELECT * FROM posts WHERE post_tags LIKE '%$search%'";
     $search_query = mysqli_query($connection, $search_post);
 
+    $query = "SELECT * FROM posts WHERE post_status = 'published'";
+    $select_published_posts = mysqli_query($connection, $query);
+
     if (!$search_query) {
         die("query failed" . mysqli_error($connection));
     }
@@ -24,50 +27,52 @@
         ?>
         <div class="col-lg-6">
             <?php
-            while ($post_col = mysqli_fetch_assoc($search_query)) {
+            while ($post_col = mysqli_fetch_assoc($select_published_posts)) {
                 $id = $post_col['id'];
                 $post_title = ucfirst($post_col['post_title']);
                 $post_author = $post_col['post_author'];
                 $post_date = $post_col['post_date'];
                 $post_img = $post_col['post_img'];
                 $post_desc = $post_col['post_desc'];
-                ?>
-                <h2>
+                $post_status = $post_col['post_status'];
 
-
-                    <a href="post.php?p_id=<?php echo $id ?>"><?php echo $post_title; ?></a>
-
-                </h2>
-                <p class="lead">
-                    by <a href="index.php">
-                        <?php echo $post_author; ?>
-                    </a>
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span>
-                    <?php echo $post_date; ?>
-                </p>
-                <hr>
-                <img class="img-responsive postImg" src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>"
-                    alt="">
-                <hr>
-                <p>
-                    <?php echo mb_strimwidth($post_desc, 0, 42,'...'); ?>
-                </p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-                <hr>
-                <?php
+                if ($post_status == 'published') {
+                    
+                    ?>
+                    <h2>
+                        <a href="post.php?p_id=<?php echo $id ?>"><?php echo $post_title; ?></a>
+                    </h2>
+                    <p class="lead">
+                        by <a href="index.php">
+                            <?php echo $post_author; ?>
+                        </a>
+                    </p>
+                    <p><span class="glyphicon glyphicon-time"></span>
+                        <?php echo $post_date; ?>
+                    </p>
+                    <hr>
+                    <img class="img-responsive postImg" src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>"
+                        alt="">
+                    <hr>
+                    <p>
+                        <?php echo mb_strimwidth($post_desc, 0, 42, '...'); ?>
+                    </p>
+                    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <hr>
+                    <?php
+                    } 
+                }
             }
+          
             ?>
         </div>
-        <?php
-    }
+    <?php
+  
     ?>
 
     <div>
         <?php include "includes/sidebar.php"; ?>
     </div>
-
-
 </div>
 
 <div class="container">

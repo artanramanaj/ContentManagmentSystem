@@ -85,11 +85,7 @@
                             <label for="post_tags">Post Tags</label>
                             <input type="text" class="form-control" id="post_tags" name="post_tags" placeholder="Tags">
                         </div>
-                        <div class="form-group">
-                            <label for="post_comment_count">Post Comment Count</label>
-                            <input type="text" class="form-control" id="post_comment_count" name="post_comment_count"
-                                placeholder="Comment Count">
-                        </div>
+               
                         <div class="form-group">
                             <label for="post_status">Post Status</label>
                             <input type="text" class="form-control" id="post_status" name="post_status"
@@ -113,12 +109,12 @@
                         $post_desc = $_POST['post_desc'];
                         $post_content = $_POST['post_content'];
                         $post_tags = $_POST['post_tags'];
-                        $post_comment_count = $_POST['post_comment_count'];
                         $post_status = $_POST['post_status'];
+                        
 
                         move_uploaded_file($post_img_temp, "../images/$post_img");
 
-                        $query = "INSERT INTO posts (post_title, post_category_name, post_author, post_date, post_img, post_desc, post_content, post_tags,  post_comment_count, post_status )  VALUES ('$post_title', '$post_category_name', '$post_author',  now() , '$post_img', '$post_desc', '$post_tags','$post_content', '$post_comment_count', '$post_status')";
+                        $query = "INSERT INTO posts (post_title, post_category_name, post_author, post_date, post_img, post_desc, post_content, post_tags,  post_status )  VALUES ('$post_title', '$post_category_name', '$post_author',  now() , '$post_img', '$post_desc', '$post_tags','$post_content',  '$post_status')";
                         $result = mysqli_query($connection, $query);
 
                     }

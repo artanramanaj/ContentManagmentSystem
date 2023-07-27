@@ -93,12 +93,19 @@ include "includes/navigation.php";
 
 
 
+               
+
+
                 $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date ) VALUES ('$comment_post_id','$comment_author', ' $comment_email', '$comment_content','unapproved', now())";
                 $create_comment = mysqli_query($connection, $query);
 
                 if (!$create_comment) {
                     echo die("Error creating while making the query") . ' ' . mysqli_error($connection);
                 }
+
+                $query = "UPDATE posts set post_comment_count = post_comment_count + 1 WHERE id = $p_id";
+
+                $update_post_comment_count = mysqli_query($connection, $query);
 
             }
 
@@ -108,8 +115,12 @@ include "includes/navigation.php";
 
             <?php
 
+            
+
             $query = "SELECT * FROM comments WHERE comment_post_id = '$p_id' AND comment_status = 'approved' ORDER BY comment_id DESC";
             $show_comments = mysqli_query($connection, $query);
+
+           
 
             while ($row = mysqli_fetch_assoc($show_comments)) {
 
