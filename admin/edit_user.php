@@ -1,147 +1,94 @@
-<?php
-
-if (isset($_GET['edit'])) {
-    $editPost = $_GET['edit'];
-
-    $query = "SELECT * FROM posts WHERE id = '$editPost'";
-    $res = mysqli_query($connection, $query);
-
-
-}
-
-while ($row = mysqli_fetch_assoc($res)) {
-    $post_category_id = $row['post_category_id'];
-    $post_title = $row['post_title'];
-    $post_author = $row['post_author'];
-    $post_date = $row['post_date'];
-    $post_img = $row['post_img'];
-    $post_desc = $row['post_desc'];
-    $post_content = $row['post_content'];
-    $post_tags = $row['post_tags'];
-    $post_comment_count = $row['post_comment_count'];
-    $post_status = $row['post_status'];
-
-
-    ?>
-
-    <form action="" method="POST" enctype="multipart/form-data">
-        <h1>Just a reminder, this is to edit post</h1>
-        <div class="form-group">
-            <label for="post_title">Post Title</label>
-            <input type="text" class="form-control" id="post_title" name="post_title" aria-describedby="emailHelp"
-                value="<?php echo $post_title ?>">
-        </div>
-
-        <select name="post_content" id="">
-
-
-            <?php
-
-            $query = "SELECT * FROM categories";
-            $response = mysqli_query($connection, $query);
+<?php include "includes/admin_header.php" ?>
 
 
 
-            while ($row = mysqli_fetch_assoc($response)) {
-                $cat_id = $row['cat_id'];
-                $cat_title = $row['cat_title'];
 
 
-                
-                ?>
-                <option value="<?php 
-            
-                $query = "SELECT * FROM categories WHERE cat_id = $post_category_id";
-                $get_cat_id = mysqli_query($connection, $query);
-                while($row = mysqli_fetch_assoc($get_cat_id)){
-                    $categorie_title = $row['cat_title'];
-           
-                echo $categorie_title;
-                
-                ?>">
-                <?php      } ?>
-                    <?php echo $cat_title ?>
-                </option>
-            <?php } ?>
-        </select>
-
-        <div class="form-group">
-            <label for="post_author">Post Author</label>
-            <input type="text" class="form-control" id="post_author" name="post_author" aria-describedby="emailHelp"
-                value="<?php echo $post_author ?>">
-        </div>
-
-        <div class="form-group">
-            <label for="post_date">Post Date</label>
-            <input type="text" class="form-control" id="post_date" name="post_date" aria-describedby="emailHelp"
-                value="<?php echo $post_date ?>">
-        </div>
-
-        <div class="form-group">
-
-            <img src="../images/<?php echo $post_img ?>" width="200" alt="">
-
-            <input type="file" class="form-control" id="post_img" name="post_img" aria-describedby="emailHelp"
-                value="<?php echo $post_img ?>">
-
-        </div>
-
-        <div class="form-group">
-            <label for="post_desc">Post Description</label>
-            <input type="text" class="form-control" id="post_desc" name="post_desc" aria-describedby="emailHelp"
-                value="<?php echo $post_desc ?>">
-        </div>
-
-        <div class="form-group">
-            <label for="post_tags">Post Tags</label>
-            <input type="text" class="form-control" id="post_tags" name="post_tags" aria-describedby="emailHelp"
-                value="<?php echo $post_tags ?>">
-        </div>
-        <div class="form-group">
-            <label for="post_comment_count">Post Comment Count</label>
-            <input type="text" class="form-control" id="post_comment_count" name="post_comment_count"
-                aria-describedby="emailHelp" value="<?php echo $post_comment_count ?>">
-        </div>
-        <div class="form-group">
-            <label for="post_status">Post Status</label>
-            <input type="text" class="form-control" id="post_status" name="post_status" aria-describedby="emailHelp"
-                value="<?php echo $post_status ?>">
-        </div>
-        <div class="form-group">
-            <label for="post_content">Post Content  </label>
-            <textarea class="form-control" id="post_content" name="post_content"
-                rows="3"><?php echo $post_content ?></textarea>
-        </div>
-        <input type="submit" value="submit" name="create_post" class="btn btn-primary"></input>
-    </form>
-<?php } ?>
 
 <?php
-
-if (isset($_POST['create_post'])) {
-    $post_title = $_POST['post_title'];
-    $post_author = $_POST['post_author'];
-    $post_date = $_POST['post_date'];
-    $post_desc = $_POST['post_desc'];
-    $post_content = $_POST['post_content'];
-    $post_tags = $_POST['post_tags'];
-    $post_comment_count = $_POST['post_comment_count'];
-    $post_status = $_POST['post_status'];
+$query = "SELECT * FROM users";
+$result = mysqli_query($connection, $query);
 
 
-    $target_dir = "../images";
-    $post_img = $_FILES['post_img']['name'];
-    $target_file = $target_dir . basename($post_img);
-    move_uploaded_file($_FILES['post_img']['tmp_name'], $target_file);
-
-
-    $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_content='$post_content' ,post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status' WHERE id='$editPost'";
-
-    $res = mysqli_query($connection, $query);
-
-    header("Location: posts.php");
-    exit;
-
-}
+while($row = mysqli_fetch_assoc($result)) {
+    $username = $row['username'];
+    $password = $row['user_password'];
+    $first_name = $row['user_firstname'];
+    $last_name = $row['user_lastname'];
+    $email = $row['user_email'];
+    $image = $row['user_image'];
+    $role = $row['user_role'];
 
 ?>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <?php include "includes/admin_navigation.php" ?>
+
+    <form action='' method='POST'>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" value="<?php echo $username ?>" class="form-control" name="username" id="username" aria-describedby="username" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" value="<?php echo $password ?>" name="password" class="form-control" id="exampleInputPassword1" >
+  </div>
+
+  <div class="form-group">
+    <label for="firstname">User First Name</label>
+    <input type="text" value="<?php echo $first_name ?>" class="form-control" id="firstname" name="firstname" aria-describedby="firstname" >
+  </div>
+  <div class="form-group">
+    <label for="lastname">User Last Name</label>
+    <input type="text" value="<?php echo $last_name ?>" class="form-control" id="lastname" name="lastname" aria-describedby="lastname" >
+  </div>
+  <div class="form-group">
+    <label for="email">User Email</label>
+    <input type="email" value="<?php echo $email ?>" class="form-control" id="email" name="email" aria-describedby="email" >
+  </div>
+  <!-- <div class="form-group">
+    <label for="userimage">User Image</label>
+    <input type="file" class="form-control" name="userimage" id="userimage" aria-describedby="userimage" >
+  </div> -->
+  <div class="form-group">
+    <select name="role" id="role"  value="<?php echo $role ?>">
+      <option value="Admin" <?php if($role =='Admin') echo 'selected' ?>>Admin</option>
+      <option value="Subscriber" <?php if($role =='Subscriber') echo 'selected' ?>>Subscriber</option>
+    </select>
+  </div>
+  <!-- <div class="form-group">
+    <label for="randSalt">User randSalt</label>
+    <input type="text" class="form-control" name="randSalt" id="randSalt" aria-describedby="role" placeholder="user randSalt">
+  </div> -->
+
+  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+<?php
+
+
+    $user_edit_id = $_GET["userid"];
+    
+
+if(isset($_POST['submit'])){
+    $username = $_POST['username'];
+    $password = $_POST['password']; 
+    $first_name= $_POST['firstname'];
+    $last_name= $_POST['lastname'];
+    $email = $_POST['email'];
+    // $image = $_POST['userimage'];
+    $role = $_POST['role'];
+
+
+    $query = "UPDATE users SET username = '$username',  user_password = '$password',  user_firstname = '$first_name', user_lastname= '$last_name', user_email='$email', user_role = '$role' WHERE user_id = $user_edit_id";
+
+   $res = mysqli_query($connection, $query);
+   header('Location: users.php');
+   exit;
+} 
+?>
+<?php } ?>
+        <?php include "includes/admin_footer.php" ?>

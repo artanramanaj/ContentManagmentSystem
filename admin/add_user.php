@@ -32,8 +32,10 @@
     <input type="file" class="form-control" name="userimage" id="userimage" aria-describedby="userimage" placeholder="userimage">
   </div>
   <div class="form-group">
-    <label for="role">User Role</label>
-    <input type="text" class="form-control" name="role" id="role" aria-describedby="role" placeholder="user role">
+    <select name="role" id="role">
+      <option value="Admin">Admin</option>
+      <option value="Subscriber" selected>Subscriber</option>
+    </select>
   </div>
   <!-- <div class="form-group">
     <label for="randSalt">User randSalt</label>

@@ -31,7 +31,7 @@
                             include "add_user.php";
                             break;
 
-                        case 'edit_posts';
+                        case 'edit_user';
                             include "edit_user.php";
                             break;
 
