@@ -1,4 +1,5 @@
 <?php include "includes/admin_header.php" ?>
+<?php session_start() ?>
 
     <div id="wrapper">
 
@@ -14,10 +15,18 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to admin
-                            <small>author</small>
+                            <small><?php echo $_SESSION['username'] ?></small>
                         </h1>
                      
+                          <?php 
                           
+                          if(isset($_SESSION['user_role'])) {
+                            if($_SESSION['user_role'] !== "Admin") {
+                                header("location: ../index.php");
+                            } 
+                          }
+
+                          ?>
                    
                     </div>
                 </div>

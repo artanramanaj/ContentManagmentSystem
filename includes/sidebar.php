@@ -20,7 +20,25 @@ $response = mysqli_query($connection, $get_categories);
             </span>
         </div>
         </form>
+    </div>
 
+
+        <!--  Login  -->
+        <div class="well">
+        <h4>Login</h4>
+        <form action="./includes/login.php" method="POST">
+    <div class="row">
+        <div class="col-md-12 ">
+            <input type="text" class="form-control mb-3" name="username" placeholder="Username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 ">
+            <input type="password" class="form-control mb-3 " name="password" placeholder="Password">
+        </div>
+    </div>
+    <button class="btn btn-info" type="submit" name="login">Login</button>
+</form>
     </div>
 
 
