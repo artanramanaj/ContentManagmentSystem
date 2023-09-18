@@ -61,6 +61,7 @@ if(isset($_POST['submit'])){
     $query = "INSERT INTO users (username, user_password, user_firstname, user_lastname, user_email, user_image, user_role ) VALUES ('$username', '$password', '$first_name', '$last_name', '$email', '$image', '$role')";
 
    mysqli_query($connection, $query);
+
 } 
 ?>
 

@@ -3,6 +3,10 @@
 
 <?php
 
+if ($_SESSION['user_role'] == null ){
+    header("location: ../index.php ");
+}
+
 if(isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
