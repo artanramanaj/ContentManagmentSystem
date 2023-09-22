@@ -24,13 +24,10 @@
                     <li>
                         <a href="#">Contact</a>
                     </li>
-                    <?php
-                $user_role_session = $_SESSION['user_role'];
-
-// Set a default routeNavigate value based on the user's role
-                    $routeNavigate = ($user_role_session === 'Admin') ? 'Admin' : 'index.php';
-?>
- <li><a href="<?php echo $routeNavigate; ?>">Admin</a></li>
+                    <li>
+                        <a href="includes/login.php">Admin</a>
+                    </li>
+                </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
