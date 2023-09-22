@@ -1,3 +1,5 @@
+<?php include "includes/db.php" ?>
+<?php   session_start() ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,10 +24,13 @@
                     <li>
                         <a href="#">Contact</a>
                     </li>
-                    <li>
-                        <a href="admin">Admin</a>
-                    </li>
-                </ul>
+                    <?php
+                $user_role_session = $_SESSION['user_role'];
+
+// Set a default routeNavigate value based on the user's role
+                    $routeNavigate = ($user_role_session === 'Admin') ? 'Admin' : 'index.php';
+?>
+ <li><a href="<?php echo $routeNavigate; ?>">Admin</a></li>
             </div>
             <!-- /.navbar-collapse -->
         </div>
