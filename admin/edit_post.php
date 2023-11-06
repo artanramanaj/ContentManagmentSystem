@@ -21,7 +21,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     $post_comment_count = $row['post_comment_count'];
     $post_status = $row['post_status'];
 
-
+    echo "<p class='bg-success '><a href='../post.php?p_id=$editPost'>View Post</a> or <a href='./posts.php'>edit more post</a></p>";
     ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
@@ -102,11 +102,21 @@ while ($row = mysqli_fetch_assoc($res)) {
             <input type="text" class="form-control" id="post_comment_count" name="post_comment_count"
                 aria-describedby="emailHelp" value="<?php echo $post_comment_count ?>">
         </div>
-        <div class="form-group">
-            <label for="post_status">Post Status</label>
-            <input type="text" class="form-control" id="post_status" name="post_status" aria-describedby="emailHelp"
-                value="<?php echo $post_status ?>">
+      
+<div class="form-group">
+<select name="post_status" id="">
+    <?php
+    if ($post_status == 'published') {
+        echo  "<option value='published' selected>Published</option>";
+        echo  "<option value='draft'>Draft</option>";
+    } else {
+        echo  "<option value='published'>Published</option>";
+        echo  "<option value='draft' selected>Draft</option>";
+    }
+    ?>
+</select>
         </div>
+
         <div class="form-group">
             <label for="post_content">Post Content  </label>
             <textarea class="form-control" id="post_content" name="post_content"
@@ -139,8 +149,7 @@ if (isset($_POST['create_post'])) {
 
     $res = mysqli_query($connection, $query);
 
-    header("Location: posts.php");
-    exit;
+        
 
 }
 

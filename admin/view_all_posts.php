@@ -1,6 +1,52 @@
+<?php
+if(isset($_POST['submit'])) {
+    $check_options = $_POST['check_options'];
+   
+    if(isset($_POST['checkBoxArray'])){
+       foreach($_POST['checkBoxArray'] as $postCheck) {
+        switch($check_options) {
+            case 'published':
+            $query = "UPDATE posts SET post_status = 'published' where id = $postCheck";
+            $change_to_published = mysqli_query($connection, $query);
+                break;
+
+            case 'draft':
+            $query = "UPDATE posts SET post_status = 'draft' where id = $postCheck";
+            $change_to_draft = mysqli_query($connection, $query);
+                break;
+
+            case 'delete':
+            $query = "DELETE FROM posts WHERE  id = $postCheck";
+            $change_to_draft = mysqli_query($connection, $query);
+                break;
+        }
+       }
+    }
+}
+?>
+
+<form action="" method="post">
+
+<div id="bulkOptionContainer" class="col-xs-4">
+    <select class="form-control" name="check_options" id="">
+    <option value="">Select Options</option>
+    <option value="published">Publish</option>
+    <option value="draft">Draft</option>
+    <option value="delete">Delete</option>
+    </select>
+</div>
+
+<div class="col-xs-4">
+    <input type="submit" name="submit" class="btn btn-success" value="Apply">
+    <a href="addposts.php" class="btn btn-primary ">Add Post</a>
+</div>
+
 <table class="table table-hover ">
     <th>
         <tr>
+        <td>
+            <input id="selectAllBoxes" type="checkbox" />
+        </td>
         <td>Id</td>
         <td>Category Id</td>
         <td>Category Name</td>
@@ -28,6 +74,9 @@
             $post_category_id = $row['post_category_id'];
             ?>
             <tr>
+                <td>
+                    <input type="checkbox" class="checkBoxes" name="checkBoxArray[]" value="<?php echo $id ?>"  >
+                </td>
                 <td>
                     <?php echo $row['id'] ?>
                 </td>
@@ -82,11 +131,9 @@
                 </td>
                 <td>
                     <?php
-                    if ($row['post_status'] == 1) {
-                        echo "the value is true" . $row['post_status'];
-                    } else {
-                        echo "the value is false 0";
-                    }
+                
+                        echo $row['post_status'];
+                
                     ?>
                 </td>
                 <td>
@@ -117,3 +164,4 @@
         ?>
     </tbody>
 </table>
+</form>

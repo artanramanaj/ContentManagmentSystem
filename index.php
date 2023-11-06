@@ -51,13 +51,15 @@
                         <?php echo $post_date; ?>
                     </p>
                     <hr>
+                    <a href="post.php?p_id=<?php echo $id ?>">>
                     <img class="img-responsive postImg" src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>"
                         alt="">
+                        </a>
                     <hr>
                     <p>
                         <?php echo mb_strimwidth($post_desc, 0, 42, '...'); ?>
                     </p>
-                    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary" href="post.php?p_id=<?php echo $id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                     <hr>
                     <?php
                     } 
