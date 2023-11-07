@@ -24,7 +24,9 @@
                     if (isset($_POST['submit'])) {
 
                         $post_title = $_POST['post_title'];
+                        // $post_category_id = $POST['cat_id'];
                         $post_category_name = $_POST['post_category_name'];
+                        echo $post_category_name .' '. 'testing cat id' ;
                         $post_author = $_POST['post_author'];
                         $post_date = date('d-m-y');
                         $post_img = $_FILES['post_img']['name'];
@@ -55,7 +57,7 @@
                                 placeholder="Title" required>
                         </div>
 
-                        <select name="post_category_name" id="post_category_name" required>
+                        <select name="post_category_name" id="" required>
 
 
                             <?php
@@ -69,13 +71,10 @@
                                 $cat_id = $row['cat_id'];
                                 $cat_title = $row['cat_title'];
 
+                              
 
                                 ?>
-                                <option value="<?php
-                                echo $cat_title;
-                                ?>">
-                                    <?php echo $cat_title ?>
-                                </option>
+                             <option value="<?php echo $cat_title; ?>"><?php echo $cat_title; ?></option>
                             <?php } ?>
                         </select>
 

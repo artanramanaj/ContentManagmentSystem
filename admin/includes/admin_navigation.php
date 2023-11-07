@@ -1,3 +1,12 @@
+<?php 
+ if(isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    
+ } else {
+    $username = 'user';
+ }
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -14,7 +23,7 @@
 
         <li><a href="../index.php">Home Page</a></li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $username ?> <b
                     class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>

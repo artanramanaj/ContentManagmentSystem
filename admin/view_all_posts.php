@@ -25,6 +25,12 @@ if(isset($_POST['submit'])) {
 }
 ?>
 
+<?php
+
+
+
+?>
+
 <form action="" method="post">
 
 <div id="bulkOptionContainer" class="col-xs-4">
@@ -63,6 +69,7 @@ if(isset($_POST['submit'])) {
     </tr>
     </th>
     <tbody>
+
         <?php
 
         $query = "SELECT * FROM posts";
@@ -72,6 +79,8 @@ if(isset($_POST['submit'])) {
 
             $id = $row['id'];
             $post_category_id = $row['post_category_id'];
+            $post_category_name = $row['post_category_name'];
+            echo $post_category_name;
             ?>
             <tr>
                 <td>
@@ -83,27 +92,13 @@ if(isset($_POST['submit'])) {
                 <td>
                     <?php echo  $post_category_id ?>
                 </td>
-                <?php 
-                      $query = "SELECT * FROM categories WHERE cat_id = '$post_category_id'";
-                      $select_category_id = mysqli_query($connection, $query);
-  
-                      while($secondrow = mysqli_fetch_assoc($select_category_id)){
-                          $category_name = $secondrow['cat_title'];
-  
-                
-                ?>
                 <td>
-                    <?php
-                    
-              
-                        echo $category_name ;
-                    
-                    ?>
+                    <?php echo $row['post_category_name'] ?>
                 </td>
-                <?php } ?>
                 <td>
                     <?php echo $row['post_title'] ?>
                 </td>
+              
 
                 <td>
                     <?php echo $row['post_author'] ?>
