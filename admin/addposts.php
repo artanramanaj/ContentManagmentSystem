@@ -1,9 +1,11 @@
 <?php include "includes/admin_header.php" ?>
 
+
 <div id="wrapper">
 
     <!-- Navigation -->
     <?php include "includes/admin_navigation.php" ?>
+
 
     <div id="page-wrapper">
 
@@ -17,6 +19,34 @@
                         <small>Author</small>
                     </h1>
 
+                    <?php
+
+                    if (isset($_POST['submit'])) {
+
+                        $post_title = $_POST['post_title'];
+                        $post_category_name = $_POST['post_category_name'];
+                        $post_author = $_POST['post_author'];
+                        $post_date = date('d-m-y');
+                        $post_img = $_FILES['post_img']['name'];
+                        $post_img_temp = $_FILES['post_img']['tmp_name'];
+                        $post_desc = $_POST['post_desc'];
+                        $post_content = $_POST['post_content'];
+                        $post_tags = $_POST['post_tags'];
+                        $post_status = $_POST['post_status'];
+
+
+                        move_uploaded_file($post_img_temp, "../images/$post_img");
+
+                        $query = "INSERT INTO posts (post_title, post_category_name, post_author, post_date, post_img, post_desc, post_content, post_tags,  post_status )  VALUES ('$post_title', '$post_category_name', '$post_author',  now() , '$post_img', '$post_desc', '$post_tags','$post_content',  '$post_status')";
+                        $result = mysqli_query($connection, $query);
+
+                        $idForPost = mysqli_insert_id($connection);
+
+                        echo "<p class='bg-success '>Post created<a href='../post.php?p_id=$idForPost'>View Post</a> or <a href='./posts.php'>edit more post</a></p>";
+
+                    }
+
+                    ?>
                     <form action="" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -85,41 +115,19 @@
                             <label for="post_tags">Post Tags</label>
                             <input type="text" class="form-control" id="post_tags" name="post_tags" placeholder="Tags">
                         </div>
-               
+
                         <div class="form-group">
-                            <label for="post_status">Post Status</label>
-                            <input type="text" class="form-control" id="post_status" name="post_status"
-                                placeholder="Post Status">
+
+                            <select name="post_status" class="form-group">
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                            </select>
                         </div>
                         <input type="submit" value="submit" name="submit" class="btn btn-primary"></input>
                     </form>
 
                     <!-- inserting data in post table-->
-                    <?php
 
-                    if (isset($_POST['submit'])) {
-
-                        $post_title = $_POST['post_title'];
-                        $post_category_name = $_POST['post_category_name'];
-                        echo $post_category_name;
-                        $post_author = $_POST['post_author'];
-                        $post_date = date('d-m-y');
-                        $post_img = $_FILES['post_img']['name'];
-                        $post_img_temp = $_FILES['post_img']['tmp_name'];
-                        $post_desc = $_POST['post_desc'];
-                        $post_content = $_POST['post_content'];
-                        $post_tags = $_POST['post_tags'];
-                        $post_status = $_POST['post_status'];
-                        
-
-                        move_uploaded_file($post_img_temp, "../images/$post_img");
-
-                        $query = "INSERT INTO posts (post_title, post_category_name, post_author, post_date, post_img, post_desc, post_content, post_tags,  post_status )  VALUES ('$post_title', '$post_category_name', '$post_author',  now() , '$post_img', '$post_desc', '$post_tags','$post_content',  '$post_status')";
-                        $result = mysqli_query($connection, $query);
-
-                    }
-
-                    ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>
