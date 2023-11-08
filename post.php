@@ -68,11 +68,11 @@ include "includes/navigation.php";
                 <form action="" method="POST" role="form">
                     <div class="form-group">
                         <label for="comment_author">Enter your name</label>
-                        <input type="text" class="form-control" id="comment_author" name="comment_author" required>
+                        <input type="text" class="form-control" id="comment_author" name="comment_author">
                     </div>
                     <div class="form-group">
                         <label for="comment_email">Enter your email</label>
-                        <input type="text" class="form-control" id="comment_email" name="comment_email" required>
+                        <input type="text" class="form-control" id="comment_email" name="comment_email">
                     </div>
                     <div class="form-group">
                         <label for="comment_content">Enter your comment</label>
@@ -90,21 +90,21 @@ include "includes/navigation.php";
                 $comment_email = $_POST['comment_email'];
                 $comment_content = $_POST['comment_content'];
 
+                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+                    $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date ) VALUES ('$comment_post_id','$comment_author', ' $comment_email', '$comment_content','unapproved', now())";
+                    $create_comment = mysqli_query($connection, $query);
 
+                    if (!$create_comment) {
+                        echo die("Error creating while making the query") . ' ' . mysqli_error($connection);
+                    }
 
-               
+                    $query = "UPDATE posts set post_comment_count = post_comment_count + 1 WHERE id = $p_id";
 
-
-                $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date ) VALUES ('$comment_post_id','$comment_author', ' $comment_email', '$comment_content','unapproved', now())";
-                $create_comment = mysqli_query($connection, $query);
-
-                if (!$create_comment) {
-                    echo die("Error creating while making the query") . ' ' . mysqli_error($connection);
+                    $update_post_comment_count = mysqli_query($connection, $query);
+                } else {
+                    echo "<p>The fields should be filled, they cant be empty</p>";
                 }
 
-                $query = "UPDATE posts set post_comment_count = post_comment_count + 1 WHERE id = $p_id";
-
-                $update_post_comment_count = mysqli_query($connection, $query);
 
             }
 
@@ -114,12 +114,12 @@ include "includes/navigation.php";
 
             <?php
 
-            
+
 
             $query = "SELECT * FROM comments WHERE comment_post_id = '$p_id' AND comment_status = 'approved' ORDER BY comment_id DESC";
             $show_comments = mysqli_query($connection, $query);
 
-           
+
 
             while ($row = mysqli_fetch_assoc($show_comments)) {
 
