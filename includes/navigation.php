@@ -25,11 +25,17 @@
                 <li>
                     <a href="#">Contact</a>
                 </li>
-
-
-                <li>
-                    <a href="includes/login.php">Admin</a>
-                </li>
+                <?php
+                    if(isset($_SESSION['user_role']) === 'Admin') {
+                        echo "<li> <a href='./admin/index.php'>Admin</a></li>";
+                      
+                    }  else {
+                        echo "<li> <a href='./index.php'>Admin</a></li>";
+                    }
+                ?>
+                <!-- <li>
+                    <a href='includes/login.php'>Admin</a>
+                </li> -->
                 <?php
                 if (isset($_SESSION['username']) && isset($_GET['p_id'])) {
                     $postid = $_GET['p_id'];

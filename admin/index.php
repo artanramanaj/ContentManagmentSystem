@@ -16,22 +16,15 @@
                         <h1 class="page-header">
                             Welcome to admin
                             <?php 
+                        
                             if(isset($_SESSION['username'])) {
                                 echo '<small>' . $_SESSION['username'] . '</small>';
-                            } 
+                            }  else {
+                                echo '<small> user </small>';
+                            }
                             ?>
                         </h1>
-                     
-                          <?php 
-                          
-                          if(isset($_SESSION['user_role'])) {
-                            if($_SESSION['user_role'] !== "Admin") {
-                                header("location: ../index.php");
-                            } 
-                          }
 
-                          ?>
-                   
                     </div>
                 </div>
                 <!-- /.row -->

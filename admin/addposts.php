@@ -26,7 +26,6 @@
                         $post_title = $_POST['post_title'];
                         // $post_category_id = $POST['cat_id'];
                         $post_category_name = $_POST['post_category_name'];
-                        echo $post_category_name .' '. 'testing cat id' ;
                         $post_author = $_POST['post_author'];
                         $post_date = date('d-m-y');
                         $post_img = $_FILES['post_img']['name'];

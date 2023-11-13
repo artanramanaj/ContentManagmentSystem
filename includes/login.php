@@ -3,12 +3,6 @@
 
 <?php
 
-if ($_SESSION['user_role'] == null) {
-    header("location: ../index.php ");
-} else {
-    header("location: ../admin ");
-}
-
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -21,6 +15,7 @@ if (isset($_POST['login'])) {
     $query = "SELECT * from users WHERE username = '$username'";
     $response = mysqli_query($connection, $query);
 
+
     while ($row = mysqli_fetch_assoc($response)) {
         $user_id = $row['user_id'];
         $user_username = $row['username'];
@@ -30,20 +25,19 @@ if (isset($_POST['login'])) {
         $user_email = $row['user_email'];
         $user_role = $row['user_role'];
 
+    }
+    $password = crypt($password, $user_password);
 
+    if ($user_username === $username && $user_password === $password) {
         $_SESSION['username'] = $user_username;
         $_SESSION['firstname'] = $user_firstname;
         $_SESSION['lastname'] = $user_lastname;
         $_SESSION['user_role'] = $user_role;
-
-
-    }
-
-    if ($user_username === $username && $user_password === $password) {
-        echo $username . $password;
-        header("location: ../admin/index.php");
-    } else {
+       header("location: ../admin/users.php ");
+       exit;
+    }   else {
         header("location: ../index.php ");
+        exit;
     }
 
 }

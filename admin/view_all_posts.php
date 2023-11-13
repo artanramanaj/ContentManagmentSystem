@@ -80,7 +80,7 @@ if(isset($_POST['submit'])) {
             $id = $row['id'];
             $post_category_id = $row['post_category_id'];
             $post_category_name = $row['post_category_name'];
-            echo $post_category_name;
+         
             ?>
             <tr>
                 <td>

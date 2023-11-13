@@ -42,16 +42,12 @@
                     <h2>
                         <a href="post.php?p_id=<?php echo $id ?>"><?php echo $post_title; ?></a>
                     </h2>
-                    <p class="lead">
-                        by <a href="index.php">
-                            <?php echo $post_author; ?>
-                        </a>
-                    </p>
+               
                     <p><span class="glyphicon glyphicon-time"></span>
                         <?php echo $post_date; ?>
                     </p>
                     <hr>
-                    <a href="post.php?p_id=<?php echo $id ?>">>
+                    <a href="post.php?p_id=<?php echo $id ?>">
                     <img class="img-responsive postImg" src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>"
                         alt="">
                         </a>

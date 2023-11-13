@@ -1,17 +1,15 @@
 <?php include "includes/admin_header.php" ?>
 
-
-
-
-
-
 <?php
-$query = "SELECT * FROM users";
+if(isset($_GET['userid'])) {
+  $userId = $_GET['userid'];
+}
+$query = "SELECT * FROM users WHERE user_id =  $userId ";
 $result = mysqli_query($connection, $query);
 
 
 while($row = mysqli_fetch_assoc($result)) {
-    $username = $row['username'];
+    $username_ = $row['username'];
     $password = $row['user_password'];
     $first_name = $row['user_firstname'];
     $last_name = $row['user_lastname'];
@@ -29,7 +27,7 @@ while($row = mysqli_fetch_assoc($result)) {
     <form action='' method='POST'>
   <div class="form-group">
     <label for="username">Username</label>
-    <input type="text" value="<?php echo $username ?>" class="form-control" name="username" id="username" aria-describedby="username" >
+    <input type="text" value="<?php echo $username_ ?>" class="form-control" name="username" id="username" aria-describedby="username" >
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
@@ -81,6 +79,14 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     // $image = $_POST['userimage'];
     $role = $_POST['role'];
+
+    $query = "SELECT randSalt FROM users";
+    $select_randSalt = mysqli_query($connection, $query);
+
+    $row = mysqli_fetch_assoc($select_randSalt);
+    $salt =  $row['randSalt'];
+
+    $password = crypt($password, $salt);
 
 
     $query = "UPDATE users SET username = '$username',  user_password = '$password',  user_firstname = '$first_name', user_lastname= '$last_name', user_email='$email', user_role = '$role' WHERE user_id = $user_edit_id";
