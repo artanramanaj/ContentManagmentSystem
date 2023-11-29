@@ -20,6 +20,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     $post_tags = $row['post_tags'];
     $post_comment_count = $row['post_comment_count'];
     $post_status = $row['post_status'];
+    $post_view_count = $row['post_views_count'];
 
     echo "<p class='bg-success '><a href='../post.php?p_id=$editPost'>View Post</a> or <a href='./posts.php'>edit more post</a></p>";
     ?>
@@ -47,19 +48,19 @@ while ($row = mysqli_fetch_assoc($res)) {
                 $cat_title = $row['cat_title'];
 
 
-                
+
                 ?>
-                <option value="<?php 
-            
+                <option value="<?php
+
                 $query = "SELECT * FROM categories WHERE cat_id = $post_category_id";
                 $get_cat_id = mysqli_query($connection, $query);
-                while($row = mysqli_fetch_assoc($get_cat_id)){
+                while ($row = mysqli_fetch_assoc($get_cat_id)) {
                     $categorie_title = $row['cat_title'];
-           
-                echo $categorie_title;
-                
-                ?>">
-                <?php      } ?>
+
+                    echo $categorie_title;
+
+                    ?>">
+                    <?php } ?>
                     <?php echo $cat_title ?>
                 </option>
             <?php } ?>
@@ -102,25 +103,29 @@ while ($row = mysqli_fetch_assoc($res)) {
             <input type="text" class="form-control" id="post_comment_count" name="post_comment_count"
                 aria-describedby="emailHelp" value="<?php echo $post_comment_count ?>">
         </div>
-      
-<div class="form-group">
-<select name="post_status" id="">
-    <?php
-    if ($post_status == 'published') {
-        echo  "<option value='published' selected>Published</option>";
-        echo  "<option value='draft'>Draft</option>";
-    } else {
-        echo  "<option value='published'>Published</option>";
-        echo  "<option value='draft' selected>Draft</option>";
-    }
-    ?>
-</select>
+
+        <div class="form-group">
+            <select name="post_status" id="">
+                <?php
+                if ($post_status == 'published') {
+                    echo "<option value='published' selected>Published</option>";
+                    echo "<option value='draft'>Draft</option>";
+                } else {
+                    echo "<option value='published'>Published</option>";
+                    echo "<option value='draft' selected>Draft</option>";
+                }
+                ?>
+            </select>
         </div>
 
         <div class="form-group">
-            <label for="post_content">Post Content  </label>
+            <label for="post_content">Post Content </label>
             <textarea class="form-control" id="post_content" name="post_content"
                 rows="3"><?php echo $post_content ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="">reset post views to 0</label>
+            <input type="checkbox" name="post_views" value="reset" />
         </div>
         <input type="submit" value="submit" name="create_post" class="btn btn-primary"></input>
     </form>
@@ -137,6 +142,9 @@ if (isset($_POST['create_post'])) {
     $post_tags = $_POST['post_tags'];
     $post_comment_count = $_POST['post_comment_count'];
     $post_status = $_POST['post_status'];
+    $post_views = isset($_POST['post_views']) ? $_POST['post_views'] : null;
+
+
 
 
     $target_dir = "../images";
@@ -145,11 +153,19 @@ if (isset($_POST['create_post'])) {
     move_uploaded_file($_FILES['post_img']['tmp_name'], $target_file);
 
 
-    $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_content='$post_content' ,post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status' WHERE id='$editPost'";
+    if ($post_views == null) {
+        $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_content='$post_content' ,post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status' WHERE id='$editPost'";
+        $res = mysqli_query($connection, $query);
+    } else {
+        $query = "UPDATE posts SET post_title='$post_title', post_author='$post_author', post_date='$post_date', post_img='$post_img', post_desc='$post_desc', post_content='$post_content' ,post_tags='$post_tags', post_comment_count='$post_comment_count', post_status='$post_status', post_views_count = '0' WHERE id='$editPost'";
+        $res = mysqli_query($connection, $query);
+    }
 
-    $res = mysqli_query($connection, $query);
 
-        
+
+
+
+
 
 }
 

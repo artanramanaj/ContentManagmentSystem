@@ -33,9 +33,9 @@ if (isset($_POST['login'])) {
         $_SESSION['firstname'] = $user_firstname;
         $_SESSION['lastname'] = $user_lastname;
         $_SESSION['user_role'] = $user_role;
-       header("location: ../admin/users.php ");
-       exit;
-    }   else {
+        header("location: ../admin/users.php ");
+        exit;
+    } else {
         header("location: ../index.php ");
         exit;
     }

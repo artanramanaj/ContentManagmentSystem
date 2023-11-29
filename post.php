@@ -11,7 +11,7 @@ include "includes/navigation.php";
         <div class="col-lg-6"><!-- Added a Bootstrap grid column class -->
 
             <?php
-          
+
 
             if (isset($_GET['p_id'])) {
                 $p_id = $_GET['p_id'];
@@ -28,38 +28,43 @@ include "includes/navigation.php";
                     $post_img = $row['post_img'];
                     $post_desc = $row['post_desc'];
                     $post_content = $row['post_content'];
-                 
+                    $post_views = $row['post_views_count'];
+
                 }
-           
-
-            ?>
 
 
-            <h2>
-                <a href="#">
-                    <?php echo $post_title; ?>
-                </a>
-            </h2>
-            <p class="lead">
-                    by <a href="post_author.php?author=<?php echo $post_author?>&post_id=<?php echo $post_id ?>">
+                $query = "UPDATE posts set post_views_count = $post_views + 1 WHERE id = $post_id";
+                $post_view_query = mysqli_query($connection, $query);
+
+
+                ?>
+
+
+                <h2>
+                    <a href="#">
+                        <?php echo $post_title; ?>
+                    </a>
+                </h2>
+                <p class="lead">
+                    by <a href="post_author.php?author=<?php echo $post_author ?>&post_id=<?php echo $post_id ?>">
                         <?php echo $post_author; ?>
                     </a>
-            </p>
-            <p><span class="glyphicon glyphicon-time"></span>
-                <?php echo $post_date; ?>
-            </p>
-            <hr>
-            <img class="img-responsive postImg"
-                src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>" alt="">
-            <hr>
-            <p>
-                <?php echo $post_desc; ?>
-            </p>
-            <p>
-                <?php echo $post_content; ?>
-            </p>
-            <hr>
-            <?php  }?>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span>
+                    <?php echo $post_date; ?>
+                </p>
+                <hr>
+                <img class="img-responsive postImg"
+                    src="images/<?php echo ($post_img != null) ? $post_img : 'exist.png'; ?>" alt="">
+                <hr>
+                <p>
+                    <?php echo $post_desc; ?>
+                </p>
+                <p>
+                    <?php echo $post_content; ?>
+                </p>
+                <hr>
+            <?php } ?>
 
 
 

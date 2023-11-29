@@ -25,13 +25,15 @@
                 <li>
                     <a href="#">Contact</a>
                 </li>
+                <li>
+                    <a href="registration.php">Register</a>
+                </li>
                 <?php
-                    if(isset($_SESSION['user_role']) === 'Admin') {
-                        echo "<li> <a href='./admin/index.php'>Admin</a></li>";
-                      
-                    }  else {
-                        echo "<li> <a href='./index.php'>Admin</a></li>";
-                    }
+                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin') {
+                    echo "<li> <a href='./admin/index.php'>Admin</a></li>";
+                } else {
+                    echo "<li> <a href='./index.php'>Admin</a></li>";
+                }
                 ?>
                 <!-- <li>
                     <a href='includes/login.php'>Admin</a>
