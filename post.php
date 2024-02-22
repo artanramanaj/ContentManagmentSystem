@@ -106,9 +106,9 @@ include "includes/navigation.php";
                         echo die("Error creating while making the query") . ' ' . mysqli_error($connection);
                     }
 
-                    $query = "UPDATE posts set post_comment_count = post_comment_count + 1 WHERE id = $p_id";
+                    // $query = "UPDATE posts set post_comment_count = post_comment_count + 1 WHERE id = $p_id";
 
-                    $update_post_comment_count = mysqli_query($connection, $query);
+                    // $update_post_comment_count = mysqli_query($connection, $query);
                 } else {
                     echo "<p>The fields should be filled, they cant be empty</p>";
                 }

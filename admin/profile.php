@@ -7,6 +7,7 @@
 
 
 <?php 
+
 $get_user_username = $_SESSION['username'];
 $query = "SELECT * FROM users WHERE username = '$get_user_username'";
 $result = mysqli_query($connection, $query);

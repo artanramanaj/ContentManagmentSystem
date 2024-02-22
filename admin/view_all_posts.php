@@ -123,7 +123,28 @@ if (isset($_POST['submit'])) {
                         <?php echo $row['post_tags'] ?>
                     </td>
                     <td>
-                        <?php echo $row['post_comment_count'] ?>
+
+                    <?php
+$query = "SELECT * FROM comments WHERE comment_post_id = $id";
+$count_post_comments = mysqli_query($connection, $query);
+
+// Check if the query executed successfully
+if ($count_post_comments) {
+    $count_comments = mysqli_num_rows($count_post_comments);
+    
+    // Check if there are any comments
+    if ($count_comments > 0) {
+       $comment = mysqli_fetch_assoc($count_post_comments);
+            $comment_id = $comment['comment_id'];
+            echo "<a href='post_comments.php?id=$id'>$count_comments</a>";
+    } else {
+        echo "0";
+    }
+} else {
+    // Print an error message if the query failed
+    echo "Query failed: " . mysqli_error($connection);
+}
+?>
                     </td>
                     <td>
                         <?php
