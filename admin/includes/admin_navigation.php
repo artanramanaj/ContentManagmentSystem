@@ -1,14 +1,13 @@
+<?php
+include "authentification.php";
+?>
+
 <?php 
-
-
  if(isset($_SESSION['username'])) {
  
     $username = $_SESSION['username'];
     
- } else {
-  
-    $username = 'user';
- }
+ } 
 ?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

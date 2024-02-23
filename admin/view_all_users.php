@@ -1,3 +1,4 @@
+
 <table class="table table-hover ">
     <thead>
         <tr>
@@ -109,13 +110,24 @@
 
       <?php
       
+      
       if(isset($_GET['delete_user'])){
-        $delete_user_id = $_GET['delete_user'];
-        $query = "DELETE FROM users WHERE user_id =  $delete_user_id ";
-        $delete_user = mysqli_query($connection, $query);
-        header('Location: users.php');
-        exit;
-      } 
+      
+
+            $role =  $_SESSION['user_role'] ;
+
+            if($role == 'Admin') {
+                $delete_user_id = mysqli_real_escape_string($connection,$_GET['delete_user']);
+                $query = "DELETE FROM users WHERE user_id =  $delete_user_id ";
+                $delete_user = mysqli_query($connection, $query);
+                header('Location: users.php');
+                exit;
+            }
+    
+         }  
+       
+
+     
 
       if(isset($_GET['role_admin'])) {
         $user_id_role = $_GET['role_admin'];

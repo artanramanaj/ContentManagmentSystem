@@ -2,6 +2,7 @@
 <?php include "includes/functions.php" ?>
 <div id="wrapper">
 
+
     <!-- Navigation -->
     <?php include "includes/admin_navigation.php" ?>
 

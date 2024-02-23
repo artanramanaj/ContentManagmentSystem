@@ -1,9 +1,11 @@
 <?php include "includes/admin_header.php" ?>
 <?php include "includes/functions.php" ?>
+<?php include "includes/admin_navigation.php" ?>
+
+
 <div id="wrapper">
 
     <!-- Navigation -->
-    <?php include "includes/admin_navigation.php" ?>
 
     <div id="page-wrapper">
 
@@ -14,7 +16,6 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Welcome to admin
-                        <small>Author</small>
                     </h1>
 
                     <?php

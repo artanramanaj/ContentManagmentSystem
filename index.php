@@ -95,7 +95,9 @@ $query = "SELECT *FROM posts LIMIT " . $page_first_result . ',' . $results_per_p
             for($page = 1; $page<= $number_of_page; $page++) {  
                 if(isset($_GET["page"])) {
                    $current_active_page = $_GET["page"];
-                } 
+                }  else {
+                    $current_active_page = 1;
+                }
           
 
                 echo $current_active_page == $page 

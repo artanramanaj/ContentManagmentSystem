@@ -1,5 +1,5 @@
 <?php include "includes/admin_header.php" ?>
-<?php session_start() ?>
+
 
     <div id="wrapper">
 

@@ -1,6 +1,7 @@
+<?php include "includes/admin_navigation.php" ?>
 <?php include "includes/admin_header.php" ?>
 <?php include "includes/functions.php" ?>
-<?php session_start() ?>
+
 <div id="wrapper">
 <div class="container-fluid">
 <div id="page-wrapper">
@@ -24,7 +25,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 ?>
 <h1>Edit your profile <?php echo $username ? $username : "user"; ?></h1>
     <!-- Navigation -->
-    <?php include "includes/admin_navigation.php" ?>
 
 
 
@@ -72,7 +72,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <?php 
 
-if(isset($_SESSION['username'])) {
+if($_SESSION['username']) {
     
   if(isset($_POST['submit'])) {
     echo "yeahahahhaha";
